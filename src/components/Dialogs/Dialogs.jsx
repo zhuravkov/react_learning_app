@@ -21,12 +21,8 @@ const Dialogs = (props) => {
 
             </div>
 
-            <EnterMessage />
-            
-
-
-
-
+            <EnterMessage newMessageText = {props.state.newMessageText} 
+                            dispatch = {props.dispatch} />
         </div>
     );
 }
