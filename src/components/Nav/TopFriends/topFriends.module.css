@@ -1,0 +1,15 @@
+.topFriends{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding-top: 50px;
+  gap: 10px;
+  font-weight: bold;
+  color: rgb(245, 244, 244);
+  
+}
+
+.topFriends img{
+  border-radius: 30px;
+  width: 50px;
+}
+

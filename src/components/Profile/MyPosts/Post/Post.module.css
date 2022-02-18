@@ -1,0 +1,10 @@
+.item {
+    color: crimson;
+}
+
+.item span {
+    color: rgb(23, 20, 220);
+}
+.item img {
+    border-radius: 30px;
+}
