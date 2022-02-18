@@ -1,0 +1,9 @@
+.topImage {
+    text-align: center;
+}
+.topImage img {
+    width: 90%;
+}
+.discriptionBlock{
+    padding: 10px;
+}
