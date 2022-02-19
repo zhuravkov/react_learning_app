@@ -8,8 +8,8 @@ import { BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 
-import store from './redux/state';
-
+// import store from './redux/store';
+import store from './redux/redux-store';
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
@@ -17,20 +17,27 @@ import store from './redux/state';
 
 
 
-let rerenderEntireTree = (state) => {
-  
+export let rerenderEntireTree = (state) => {
+    
     ReactDOM.render(
         <React.StrictMode>
             <BrowserRouter>
                 <App state={state}
-                    dispatch = {store.dispatch.bind(store)} />
+                    dispatch={store.dispatch.bind(store)} />
             </BrowserRouter>
         </React.StrictMode>,
         document.getElementById('root')
     );
 }
-rerenderEntireTree(store.state);
 
-store.subscribe(rerenderEntireTree);
+rerenderEntireTree(store.getState());
+
+
+store.subscribe(() => {
+    let state = store.getState();
+    rerenderEntireTree(state);
+});
+
+
 
 reportWebVitals();

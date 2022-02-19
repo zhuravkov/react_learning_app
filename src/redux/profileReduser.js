@@ -7,11 +7,28 @@ export let updateNewPostActionCreator= (text) =>
   ({type: UPDATE_NEW_POST_TEXT, newPostText: text});
 
 
+let initialState = {
+    
+        newPostText: 'Ввод',
+        posts: [
+            { id: '1', message: 'Hy man', likes: '15' },
+            { id: '2', message: 'Привет', likes: '13' },
+            { id: '3', message: 'Как дела?', likes: '12' },
+            { id: '4', message: 'Ты тут', likes: '43' },
+            { id: '5', message: 'Новый пост', likes: '16' },
+            { id: '6', message: 'Привет из Index.JS', likes: '100' },
+            { id: '7', message: 'Привет из STATE.JS', likes: '20' }
+        ]
+
+    }
+
+
 //Павильный код
 
-const profileReduser = (state,action) =>{
-    switch (action.type){
+const profileReduser = (state=initialState,action) =>{
 
+    switch (action.type){
+    
         case ADD_POST:
             let newPost = {
                 id: "8",
@@ -20,17 +37,22 @@ const profileReduser = (state,action) =>{
             };
             state.posts.push(newPost);
             state.newPostText = '';
-            
+            console.log(state)
             return state;
 
         case UPDATE_NEW_POST_TEXT:
             console.log(action.newPostText);
             state.newPostText = action.newPostText;
+            
+            console.log(state)
+            
             return state;
+
 
         default:
             return state;
     }
+    
 }
 
 export default profileReduser; 
