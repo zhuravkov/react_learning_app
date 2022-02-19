@@ -3,8 +3,8 @@ import s from './MyPosts.module.css';
 import Post from './Post/Post.jsx'
 
 
-import { addPostActionCreator } from './../../../redux/state';
-import { updateNewPostActionCreator } from './../../../redux/state';
+import { addPostActionCreator } from './../../../redux/profileReduser.js';
+import { updateNewPostActionCreator } from './../../../redux/profileReduser.js';
 
 const MyPosts = (props) => {
 
