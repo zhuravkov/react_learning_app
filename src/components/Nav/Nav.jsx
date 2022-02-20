@@ -3,7 +3,9 @@ import s from './Nav.module.css';
 import TopFriends from './TopFriends/TopFriends';
 
 const Nav = (props) => {
+    
     return (
+        
         <nav className={s.nav}>
             <div>
                 < NavLink to="/profile" className={(navData) => navData.isActive ? s.navLinkActive : s.navlink}>Профиль</NavLink>
@@ -21,7 +23,7 @@ const Nav = (props) => {
                 <NavLink to="/settings" className={(navData) => navData.isActive ? s.navLinkActive : s.navlink}>Настройки</NavLink>
             </div>
 
-            <TopFriends state={props.state} />
+            <TopFriends state={props.state.sideBar.friends} />
             
         </nav>
     );

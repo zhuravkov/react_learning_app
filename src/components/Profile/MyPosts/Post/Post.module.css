@@ -1,5 +1,6 @@
 .item {
     color: crimson;
+    white-space: pre-line;
 }
 
 .item span {

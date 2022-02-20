@@ -3,32 +3,29 @@ import s from './MyPosts.module.css';
 import Post from './Post/Post.jsx'
 
 
-import { addPostActionCreator } from './../../../redux/profileReduser.js';
-import { updateNewPostActionCreator } from './../../../redux/profileReduser.js';
+
 
 const MyPosts = (props) => {
 
-    let postsElements = props.state.posts.map(p => <Post message={p.message} likes={p.likes} />)
+    let postsElements = props.posts.map(p => <Post message={p.message} likes={p.likes} />)
 
-    let newPostElement = React.createRef();
 
-    let addPost = () => {
-        props.dispatch(addPostActionCreator());
-
-        //обнуляет текст  если в бизнесе нет возможности       props.updateNewPostText(''); но не так newPostElement.current.value = ''; 
+    let onAddPost = () => {
+        props.addNewPost();
     };
 
-    let newPostText = () => {
-        let text = newPostElement.current.value;
-        props.dispatch(updateNewPostActionCreator(text));
+    let onNewPostTextUpdate = (e) => {
+        let text = e.target.value ;
+        props.updateNewPostText (text) ;
     }
+  
     return (
         <div>
             <div>
-                <textarea ref={newPostElement} onChange={newPostText} value={props.state.newPostText} cols="60" rows="10"></textarea>
+                <textarea  onChange={onNewPostTextUpdate} value={props.newPostText} cols="60" rows="10"></textarea>
             </div>
             <div>
-                <button onClick={addPost} > Добавить пост </button>
+                <button onClick={onAddPost} > Добавить пост </button>
             </div>
             <div>
                 {postsElements}

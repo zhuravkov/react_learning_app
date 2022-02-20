@@ -9,7 +9,7 @@ export let updateNewPostActionCreator= (text) =>
 
 let initialState = {
     
-        newPostText: 'Ввод',
+        newPostText: 'Новый пост',
         posts: [
             { id: '1', message: 'Hy man', likes: '15' },
             { id: '2', message: 'Привет', likes: '13' },
@@ -17,7 +17,7 @@ let initialState = {
             { id: '4', message: 'Ты тут', likes: '43' },
             { id: '5', message: 'Новый пост', likes: '16' },
             { id: '6', message: 'Привет из Index.JS', likes: '100' },
-            { id: '7', message: 'Привет из STATE.JS', likes: '20' }
+            { id: '7', message: 'Привет\nиз STATE.JS', likes: '20' }
         ]
 
     }
@@ -37,18 +37,13 @@ const profileReduser = (state=initialState,action) =>{
             };
             state.posts.push(newPost);
             state.newPostText = '';
-            console.log(state)
+            console.log(newPost)
+            console.log(`newPost.message ${newPost.message}`)
             return state;
-
         case UPDATE_NEW_POST_TEXT:
-            console.log(action.newPostText);
+
             state.newPostText = action.newPostText;
-            
-            console.log(state)
-            
             return state;
-
-
         default:
             return state;
     }

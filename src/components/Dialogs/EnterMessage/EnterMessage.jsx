@@ -1,29 +1,28 @@
 import React from 'react';
 import s from '.././Dialogs.module.css'
-import { updateNewMessageActionCreator } from '../../../redux/dialogsReduser.js';
-import { addMessageActionCreator } from './../../../redux/dialogsReduser.js';
+
 
 
 
 const  EnterMessage = (props) => {
+    
 
-
-    let updateNewMessage = (e) => {
+    let onUpdateNewMessage = (e) => {
         let text = e.target.value;
-        props.dispatch(updateNewMessageActionCreator (text));
+        props.updateNewMessage (text);
     }
     
-    let sendMessage =() => {
-        props.dispatch(addMessageActionCreator());
+    let onSendMessage =() => {
+        props.sendMessage();
     }
 
     return (
         <div className= { s.enterMessage }>
             <div>
-                <textarea  onChange={ updateNewMessage } value={props.newMessageText} placeholder="Введи сообщение"  cols="80" rows="3"></textarea>
+                <textarea  onChange={ onUpdateNewMessage } value={props.newMessageText} placeholder="Введи сообщение"  cols="80" rows="3"></textarea>
             </div>
             <div>
-                <button onClick={ sendMessage } >Отправить</button>
+                <button onClick={ onSendMessage } >Отправить</button>
             </div>
                 
             

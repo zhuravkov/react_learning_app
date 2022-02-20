@@ -6,6 +6,9 @@ import EnterMessage from './EnterMessage/EnterMessage';
 
 
 const Dialogs = (props) => {
+    
+
+    
 
     let dialogsElements = props.state.dialogs.map(d => <Dialog id={d.id} name={d.name} />);
     let messagesElement = props.state.messages.map(m => <Message id={m.id} message={m.message} />);
@@ -22,7 +25,9 @@ const Dialogs = (props) => {
             </div>
 
             <EnterMessage newMessageText = {props.state.newMessageText} 
-                            dispatch = {props.dispatch} />
+                          sendMessage =  { props. sendMessage }
+                          updateNewMessage = { props.updateNewMessage }                          
+            />
         </div>
     );
 }
