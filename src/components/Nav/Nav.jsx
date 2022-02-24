@@ -23,7 +23,7 @@ const Nav = (props) => {
                 <NavLink to="/settings" className={(navData) => navData.isActive ? s.navLinkActive : s.navlink}>Настройки</NavLink>
             </div>
 
-            <TopFriends state={props.state.sideBar.friends} />
+            {/* <TopFriends state={props.state.sideBar.friends} /> */}
             
         </nav>
     );

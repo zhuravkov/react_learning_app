@@ -10,8 +10,8 @@ const Dialogs = (props) => {
 
     
 
-    let dialogsElements = props.state.dialogs.map(d => <Dialog id={d.id} name={d.name} />);
-    let messagesElement = props.state.messages.map(m => <Message id={m.id} message={m.message} />);
+    let dialogsElements = props.dialogsPage.dialogs.map(d => <Dialog id={d.id} name={d.name} />);
+    let messagesElement = props.dialogsPage.messages.map(m => <Message id={m.id} message={m.message} />);
 
     return (
         <div className={s.dialogs}>
@@ -24,9 +24,9 @@ const Dialogs = (props) => {
 
             </div>
 
-            <EnterMessage newMessageText = {props.state.newMessageText} 
-                          sendMessage =  { props. sendMessage }
-                          updateNewMessage = { props.updateNewMessage }                          
+            <EnterMessage newMessageText = {props.dialogsPage.newMessageText} 
+                          sendMessage =  { props.onSendMessageClick }
+                          updateNewMessage = { props.onNewMessageChange }                          
             />
         </div>
     );

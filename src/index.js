@@ -10,6 +10,7 @@ import './index.css';
 
 // import store from './redux/store';
 import store from './redux/redux-store';
+import { Provider } from 'react-redux';
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
@@ -17,14 +18,14 @@ import store from './redux/redux-store';
 
 
 
-export let rerenderEntireTree = (state) => {
+export let rerenderEntireTree = () => {
 
     ReactDOM.render(
         <React.StrictMode>
             <BrowserRouter>
-                <App state = {state} 
-                     store={store}
-                     dispatch={store.dispatch.bind(store)} />
+                <Provider store={store}>
+                    <App />
+                </Provider>
             </BrowserRouter>
         </React.StrictMode>,
         document.getElementById('root')
