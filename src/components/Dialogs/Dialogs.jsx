@@ -23,10 +23,10 @@ const Dialogs = (props) => {
                 <div className={`${s.message} ${s.messageRight}`} >Новые сообщения</div>
 
             </div>
-
             <EnterMessage newMessageText = {props.state.newMessageText} 
                           sendMessage =  { props. sendMessage }
-                          updateNewMessage = { props.updateNewMessage }                          
+                          updateNewMessage = { props.updateNewMessage }       
+        
             />
         </div>
     );

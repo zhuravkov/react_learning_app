@@ -3,7 +3,6 @@ import React from 'react';
 
 import { addPostActionCreator } from '../../../redux/profileReduser.js';
 import { updateNewPostActionCreator } from '../../../redux/profileReduser.js';
-
 import MyPosts from './MyPosts.jsx';
 
 
