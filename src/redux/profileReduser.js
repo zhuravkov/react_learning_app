@@ -29,25 +29,24 @@ const profileReduser = (state=initialState,action) =>{
 
     switch (action.type){
     
-        case ADD_POST:
-            let newPost = {
-                id: "8",
-                message: state.newPostText,
-                likes: "0"
+        case ADD_POST:{
+            let postBody = state.newPostText;
+            return {
+                ...state,
+                newPostText: 'Новый пост',
+                posts: [...state.posts, {id: "8",message: postBody, likes: "0"}]
             };
-            state.posts.push(newPost);
-            state.newPostText = '';
-            console.log(newPost)
-            console.log(`newPost.message ${newPost.message}`)
-            return state;
-        case UPDATE_NEW_POST_TEXT:
-
-            state.newPostText = action.newPostText;
-            return state;
+        }
+        case UPDATE_NEW_POST_TEXT:{
+            return {
+                ...state,
+                newPostText: action.newPostText
+            };
+        }
         default:
             return state;
     }
-    
 }
+
 
 export default profileReduser; 
