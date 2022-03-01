@@ -1,0 +1,9 @@
+
+.userClass img{
+    border-radius: 30px;
+    width: 100px;
+}
+.user {
+    display: inline-block;
+    padding: 20px;
+}
