@@ -27,25 +27,25 @@ let initialState = {
 
 
 
-const dialogsReduser = (state=initialState,action) =>{
+const dialogsReduser = (state = initialState, action) => {
+  switch (action.type) {
+    case SEND_MESSAGE:
+      let body = state.newMessageText
+      return {  
+        ...state, //возвращается копия state
+        newMessageText: '', //в ней меняется данное свойство
+        messages: [...state.messages, { id: "9", message: body }]//создается новый объект messages, 
+      };                  //который копируется от предыдущего и в конец добавляется новый объект(замена push)
 
-    if (action.type === SEND_MESSAGE) {
-        
-        let newMessage = {
-          id: "9",
-          message: state.newMessageText
-        };
-        state.messages.push(newMessage);
-        state.newMessageText = '';
-        console.log(state)
-      }
-      else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
-        console.log(action.newMessageText);
-        state.newMessageText = action.newMessageText;
-        console.log(state)
-      }
-    return state; 
-    
+   case UPDATE_NEW_MESSAGE_TEXT:
+      return {
+        ...state,
+        newMessageText: action.newMessageText
+      };
+
+      default:
+        return state;
+    }  
 }
 
 // MESSAGES
