@@ -23,17 +23,14 @@ const Dialogs = (props) => {
                 <div className={`${s.message} ${s.messageRight}`} >Новые сообщения</div>
 
             </div>
-<<<<<<< HEAD
-            <EnterMessage newMessageText = {props.state.newMessageText} 
-                          sendMessage =  { props. sendMessage }
-                          updateNewMessage = { props.updateNewMessage }       
+  
         
-=======
+
 
             <EnterMessage newMessageText = {props.dialogsPage.newMessageText} 
                           sendMessage =  { props.onSendMessageClick }
                           updateNewMessage = { props.onNewMessageChange }                          
->>>>>>> ae907591b19d9dec1ca4653b0b16f44d90cf89a0
+
             />
         </div>
     );
