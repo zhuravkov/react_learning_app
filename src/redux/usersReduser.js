@@ -8,12 +8,13 @@ let inicialState = {
 }
 
 const usersReduser = (state = inicialState, action) => {
+
     switch (action.type) {
         case FOLLOW:
             return {
                 ...state,
                 users: state.users.map(u => {
-                    if (u.id === action.userId) {
+                    if (u.testId === action.userId) {
                         return {...u, followed: true}
                     }
                     return u;
@@ -23,7 +24,7 @@ const usersReduser = (state = inicialState, action) => {
             return {
                 ...state,
                 users: state.users.map(u => {
-                    if (u.id === action.userId) {
+                    if (u.testId === action.userId) {
                         return {...u, followed: false}
                     }
                     return u;
