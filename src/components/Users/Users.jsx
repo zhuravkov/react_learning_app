@@ -5,8 +5,7 @@ import userPhoto from '.././123.png'
 let Users = (props) => {
 
     if (props.users.length === 0) {
-        axios.get('http://localhost:8000/api/').then(response =>{
-            debugger
+        axios.get('http://localhost:8000/api/users').then(response =>{
             props.setUsers(response.data)
         })
     }
@@ -22,8 +21,8 @@ let Users = (props) => {
                             </div>
                             <div>
                                 {u.followed
-                                    ? <button onClick={() => { props.unfollow(u.testId) }} >UnFollow</button>
-                                    : <button onClick={() => { props.follow(u.testId) }} >Follow</button>
+                                    ? <button onClick={() => { props.unfollow(u.id) }} >UnFollow</button>
+                                    : <button onClick={() => { props.follow(u.id) }} >Follow</button>
                                 }
                             </div>
                         </span>

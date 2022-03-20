@@ -8,6 +8,7 @@ let inicialState = {
 }
 
 const usersReduser = (state = inicialState, action) => {
+
     switch (action.type) {
         case FOLLOW:
             return {
