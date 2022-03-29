@@ -9,7 +9,7 @@ let inicialState = {
     users : [],
     pageSize : 4,
     totalUsersCount : 1,
-    currentPage : 2
+    currentPage : 1
 
 }
 
