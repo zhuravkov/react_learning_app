@@ -1,10 +1,16 @@
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 
 
 let inicialState = {
-    users : []
+    users : [],
+    pageSize : 4,
+    totalUsersCount : 1,
+    currentPage : 2
+
 }
 
 const usersReduser = (state = inicialState, action) => {
@@ -32,7 +38,12 @@ const usersReduser = (state = inicialState, action) => {
             }
         case SET_USERS:
             return {...state, users:[...action.users]} //Вместо [...state.users, ...action.users] чтобы не рисовало 2 раза
-    
+        
+        case SET_CURRENT_PAGE:
+            return {...state, currentPage:action.currentPage} //меняем свойство
+
+        case SET_TOTAL_USERS_COUNT:
+                return {...state, totalUsersCount:action.totalUsersCount}
         default:
             return state;
     }
@@ -44,5 +55,10 @@ const usersReduser = (state = inicialState, action) => {
 export const followAC = (userId) => ({type: FOLLOW, userId})
 export const unfollowAC = (userId) => ({type: UNFOLLOW, userId})
 export const setUsersAC = (users) => ({type: SET_USERS, users})
+export const setCurrentPageAC = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage})
+export const setTotalUsersCountAC = (totalUsersCount) => ({type: SET_TOTAL_USERS_COUNT, totalUsersCount})
+
+
+
 
 export default usersReduser
