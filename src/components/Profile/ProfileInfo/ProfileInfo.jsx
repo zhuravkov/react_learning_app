@@ -1,6 +1,12 @@
 import s from './ProfileInfo.module.css';
+import Preloader from '../../common/Preloader';
 
-const ProfileInfo = () => {
+const ProfileInfo = (props) => {
+
+    if (!props.profile) {
+        return <Preloader />
+    }
+
     return (
         <div>
             <div className={s.topImage}>
@@ -8,7 +14,12 @@ const ProfileInfo = () => {
             </div>
 
             <div className={s.discriptionBlock}>
-                ava+disc
+                <div>
+                    {props.profile.name}
+                </div>
+                <div>
+                    {props.profile.status}
+                </div>
             </div>
         </div>);
 }

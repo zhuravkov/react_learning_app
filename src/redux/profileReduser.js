@@ -1,10 +1,9 @@
 const ADD_POST = 'ADD_POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
+const SET_USER_PROFILE = 'SET_USER_PROFILE';
 
-// ПОСТЫ
-export let addPostActionCreator= () => ({type: ADD_POST});
-export let updateNewPostActionCreator= (text) => 
-  ({type: UPDATE_NEW_POST_TEXT, newPostText: text});
+
+
 
 
 let initialState = {
@@ -18,7 +17,8 @@ let initialState = {
             { id: '5', message: 'Новый пост', likes: '16' },
             { id: '6', message: 'Привет из Index.JS', likes: '100' },
             { id: '7', message: 'Привет\nиз STATE.JS', likes: '20' }
-        ]
+        ],
+        profile:null
 
     }
 
@@ -43,10 +43,28 @@ const profileReduser = (state=initialState,action) =>{
                 newPostText: action.newPostText
             };
         }
+        case SET_USER_PROFILE:{
+            return {
+                ...state,
+                profile: action.profile
+            };
+        }
+
+
+
         default:
             return state;
     }
 }
+
+
+// ПОСТЫ
+export let addPostActionCreator= () => ({type: ADD_POST});
+export let updateNewPostActionCreator= (text) => 
+  ({type: UPDATE_NEW_POST_TEXT, newPostText: text});
+
+export let setUserProfile= (profile) => ({type: SET_USER_PROFILE, profile});
+
 
 
 export default profileReduser; 
