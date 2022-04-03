@@ -3,12 +3,12 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import Users from './Users';
-import { followAC } from './../../redux/usersReduser';
-import { unfollowAC } from './../../redux/usersReduser';
-import { setUsersAC } from './../../redux/usersReduser';
-import { setCurrentPageAC } from './../../redux/usersReduser';
-import { setTotalUsersCountAC } from './../../redux/usersReduser';
-import { toggleIsFethingAC } from './../../redux/usersReduser';
+import { follow } from './../../redux/usersReduser';
+import { unfollow } from './../../redux/usersReduser';
+import { setUsers } from './../../redux/usersReduser';
+import { setCurrentPage } from './../../redux/usersReduser';
+import { setTotalUsersCount } from './../../redux/usersReduser';
+import { toggleIsFething } from './../../redux/usersReduser';
 import Preloader from '../common/Preloader';
 
 
@@ -61,7 +61,7 @@ let mapStateToProps = (state) => {
     }
 }
 
-
+/*
 let MapDispatchToProps = (dispatch) => {
 
     return {
@@ -87,6 +87,6 @@ let MapDispatchToProps = (dispatch) => {
 
     }
 }
+*/
 
-
-export default  connect(mapStateToProps, MapDispatchToProps)(UsersContainer)
+export default  connect(mapStateToProps, {follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount,toggleIsFething,})(UsersContainer)
