@@ -1,48 +1,40 @@
-import * as axios from 'axios';
 import s from './Users.module.css';
 import userPhoto from '.././123.png'
-import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 
+let Users = (props) => {
 
-//Создали классовую компоненту (старый формат)
+        let pagesCount = Math.ceil(props.totalUsersCount/props.pageSize)
+        let pages = [];
+        for (let i=1; i<=pagesCount; i++){
+            pages.push(i)
+        }
+        return (
+            <div className={s.userClass} > 
 
-class Users extends React.Component {
-    constructor (props) {
-        super(props);
-        //убрали запрос на сервер в конструктор так как он вызывается 1 раз при создании объекта
-        alert("NEW") //со strictMode 2 раза????
-        axios.get('http://localhost:8000/api/').then(response =>{
-                this.props.setUsers(response.data)
-            })
-    }
+                <div>
+                    {pages.map(p => {
+                        return <span className={ props.currentPage===p ? s.selectedPaje : ''} 
+                        onClick={(e)=>{ props.onPageChanged(p) }  }>{p}</span>
+                    })}
+                </div>
 
 
-
-    // getUsers = () =>{    // новый способ объявления метода, не теряется контекст вызова(this)
-    //     if (this.props.users.length === 0) {
-    //         axios.get('http://localhost:8000/api/').then(response =>{
-                
-    //             this.props.setUsers(response.data)
-    //         })
-    //     }
-    // }
-
-    render() { 
-        return   <div className={s.userClass} >
-                {/* <button onClick={ this.getUsers } >GET USERS</button> */}
-                {
-                this.props.users.map(u => {
+            {
+                props.users.map(u => {
                     return (
                         <div key={u.testId} >
                             <span className={s.user}>
                                 <div>
-                                    <img src={u.photoUrl !=null ? u.photoUrl : userPhoto } alt="userPhoto" />
+                                    <NavLink to = {'/profile/'+ u.id}>
+                                        <img src={u.photoUrl != null ? u.photoUrl : userPhoto} alt="userPhoto" />
+                                    </NavLink>
                                 </div>
                                 <div>
                                     {u.followed
-                                        ? <button onClick={() => { this.props.unfollow(u.testId) }} >UnFollow</button>
-                                        : <button onClick={() => { this.props.follow(u.testId) }} >Follow</button>
+                                        ? <button onClick={() => { props.unfollow(u.id) }} >UnFollow</button>
+                                        : <button onClick={() => { props.follow(u.id) }} >Follow</button>
                                     }
                                 </div>
                             </span>
@@ -52,12 +44,11 @@ class Users extends React.Component {
                             </span>
                         </div>
                     )
-                })}
+                })
+            }
             </div>
-        
-    }
-}
-
+        )
+    } 
 
 
 export default Users

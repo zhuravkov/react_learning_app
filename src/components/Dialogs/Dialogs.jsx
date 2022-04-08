@@ -1,8 +1,10 @@
-import s from './Dialogs.module.css';
-
 import Dialog from './DialogItem/DialogItem.jsx';
-import Message from './Message/Message.jsx';
-import EnterMessage from './EnterMessage/EnterMessage';
+import s from './Dialogs.module.css';
+import EnterMessage from "./EnterMessage/EnterMessage";
+import Message from "./Message/Message";
+
+
+
 
 
 const Dialogs = (props) => {
