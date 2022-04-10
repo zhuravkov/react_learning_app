@@ -10,29 +10,27 @@ import { setCurrentPage } from './../../redux/usersReduser';
 import { setTotalUsersCount } from './../../redux/usersReduser';
 import { toggleIsFething } from './../../redux/usersReduser';
 import Preloader from '../common/Preloader';
+import { usersAPI } from '../../api/api.js';
 
 
 
 class UsersContainer extends React.Component{
     componentDidMount = () => {
         this.props.toggleIsFething(true);
-        axios.get(`http://localhost:8000/api/users?page=${this.props.currentPage}&on_page=${this.props.pageSize}`, {        
-            withCredentials: true
-        }).then(response => {
+        // обращаемся в DAL вместо сервера и там выполняется запрос, сюда возвращается только data
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
             this.props.toggleIsFething(false);
-            this.props.setUsers(response.data.users);
-            this.props.setTotalUsersCount(response.data.count)
+            this.props.setUsers(data.users);
+            this.props.setTotalUsersCount(data.count)
         })
     }
 
     onPageChanged = (pageNumber) => {
         this.props.setCurrentPage(pageNumber);
         this.props.toggleIsFething(true);
-        axios.get(`http://localhost:8000/api/users?page=${pageNumber}&on_page=${this.props.pageSize}`, {        
-            withCredentials: true
-        }).then(response => {
+        usersAPI.getUsers(pageNumber, this.props.pageSize).then(data => {
             this.props.toggleIsFething(false);
-            this.props.setUsers(response.data.users)
+            this.props.setUsers(data.users)
         })        
     }
 

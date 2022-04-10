@@ -1,25 +1,22 @@
 
 import Header from './Header';
 import React from 'react';
-import * as axios from 'axios';
+
 import { connect } from 'react-redux';
 import { setAuthUserData } from '../../redux/authReduser';
+import { authAPI } from '../../api/api';
 
 
 class HeaderContainer extends React.Component {
 
     componentDidMount (){
-        
-        axios.get(`http://localhost:8000/api/auth/me`, {        
-        withCredentials: true
-    })
-        .then(response => {
-            if (response.data.resultCode ===0 ) {
-                let {id, login, email} = response.data.data
+        // убрали запрос к серверу в api.js
+        authAPI.authMe()
+        .then(data => {
+            if (data.resultCode ===0 ) {
+                let {id, login, email} = data.data
                 this.props.setAuthUserData(id, login, email);
             }
-            // this.props.setUsers(response.data.users);
-            // this.props.setTotalUsersCount(response.data.count)
         })
     }
 
