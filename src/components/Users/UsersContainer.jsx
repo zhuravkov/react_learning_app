@@ -16,7 +16,9 @@ import Preloader from '../common/Preloader';
 class UsersContainer extends React.Component{
     componentDidMount = () => {
         this.props.toggleIsFething(true);
-        axios.get(`http://localhost:8000/api/users?page=${this.props.currentPage}&on_page=${this.props.pageSize}`).then(response => {
+        axios.get(`http://localhost:8000/api/users?page=${this.props.currentPage}&on_page=${this.props.pageSize}`, {        
+            withCredentials: true
+        }).then(response => {
             this.props.toggleIsFething(false);
             this.props.setUsers(response.data.users);
             this.props.setTotalUsersCount(response.data.count)
@@ -26,7 +28,9 @@ class UsersContainer extends React.Component{
     onPageChanged = (pageNumber) => {
         this.props.setCurrentPage(pageNumber);
         this.props.toggleIsFething(true);
-        axios.get(`http://localhost:8000/api/users?page=${pageNumber}&on_page=${this.props.pageSize}`).then(response => {
+        axios.get(`http://localhost:8000/api/users?page=${pageNumber}&on_page=${this.props.pageSize}`, {        
+            withCredentials: true
+        }).then(response => {
             this.props.toggleIsFething(false);
             this.props.setUsers(response.data.users)
         })        
