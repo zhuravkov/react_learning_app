@@ -38,15 +38,24 @@ let Users = (props) => {
                                 </div>
                                 <div>
                                     {u.followed
-                                        ? <button onClick={() => {
+                                        // кнопка не активна когда на нее нажали ушёл запрос, вернулся и обновился стэйт
+                                        ? <button disabled={props.followingInProgress.some(id=>id === u.id) } onClick={() => {
+                                          
                                             // убрали запросы к серверу в api.js
+                                            props.toggleFollowingInProgress(true, u.id)
                                             folowingAPI.unfollowAPI(u.id)
-                                                .then(data => { if (data.resultCode == 0) { props.unfollow(u.id) } })
+                                                .then(data => { if (data.resultCode == 0) { 
+                                                    props.unfollow(u.id) } 
+                                            props.toggleFollowingInProgress(false, u.id)
+                                            })
+
                                         }}>UnFollow</button>
 
-                                        : <button onClick={() => {
+                                        : <button disabled={props.followingInProgress.some(id=>id === u.id) } onClick={() => {
+                                            props.toggleFollowingInProgress(true, u.id)
                                             folowingAPI.followAPI(u.id)
-                                                .then(data => { if (data.resultCode == 0) { props.follow(u.id) } })
+                                                .then(data => { if (data.resultCode == 0) { props.follow(u.id) } 
+                                                props.toggleFollowingInProgress(false, u.id)})
                                         }}>Follow</button>}
                                 </div>
                             </span>

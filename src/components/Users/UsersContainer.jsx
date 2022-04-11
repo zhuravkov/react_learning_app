@@ -3,7 +3,7 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import Users from './Users';
-import { follow } from './../../redux/usersReduser';
+import { follow, toggleFollowingInProgress } from './../../redux/usersReduser';
 import { unfollow } from './../../redux/usersReduser';
 import { setUsers } from './../../redux/usersReduser';
 import { setCurrentPage } from './../../redux/usersReduser';
@@ -43,23 +43,30 @@ class UsersContainer extends React.Component{
         <Users 
         users = {this.props.users}
         pageSize = {this.props.pageSize}
+        totalUsersCount = {this.props.totalUsersCount}
         currentPage = {this.props.currentPage}
         follow = {this.props.follow}
         unfollow = {this.props.unfollow}
         onPageChanged =  {this.onPageChanged}
-        totalUsersCount = {this.props.totalUsersCount}
+        toggleFollowingInProgress = {this.props.toggleFollowingInProgress}
+        followingInProgress= {this.props.followingInProgress}
+        
+        
         />
         </>
     } 
 }
 
 let mapStateToProps = (state) => {
+
     return {
         users: state.usersPage.users,
         pageSize : state.usersPage.pageSize,
         totalUsersCount : state.usersPage.totalUsersCount,
         currentPage : state.usersPage.currentPage,
-        isFetching : state.usersPage.isFetching
+        isFetching : state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
+
     }
 }
 
@@ -92,4 +99,5 @@ let MapDispatchToProps = (dispatch) => {
 }
 */
 
-export default  connect(mapStateToProps, {follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount,toggleIsFething,})(UsersContainer)
+export default  connect(mapStateToProps, {follow, unfollow, setUsers, setCurrentPage, 
+    setTotalUsersCount,toggleIsFething,toggleFollowingInProgress})(UsersContainer)
