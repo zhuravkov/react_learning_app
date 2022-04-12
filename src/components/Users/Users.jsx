@@ -4,9 +4,6 @@ import { NavLink } from 'react-router-dom';
 
 
 
-
-
-
 let Users = (props) => {
 
         let pagesCount = Math.ceil(props.totalUsersCount/props.pageSize)
@@ -39,25 +36,11 @@ let Users = (props) => {
                                     {u.followed
                                         // кнопка не активна когда на нее нажали ушёл запрос, вернулся и обновился стэйт
                                         ? <button disabled={props.followingInProgress.some(id=>id === u.id) } onClick={() => {
-                                          
-                                            // убрали запросы к серверу в api.js
-                                            // УБРАЛИ В САНКУ
-                                            // props.toggleFollowingInProgress(true, u.id)
-                                            // folowingAPI.unfollowAPI(u.id)
-                                            //     .then(data => { if (data.resultCode == 0) { 
-                                            //         props.unfollow(u.id) } 
-                                            // props.toggleFollowingInProgress(false, u.id)
-                                            // })
                                             props.unfollow(u.id)
 
                                         }}>UnFollow</button>
 
                                         : <button disabled={props.followingInProgress.some(id=>id === u.id) } onClick={() => {
-                                            // УБРАЛИ В САНКУ
-                                            // props.toggleFollowingInProgress(true, u.id)
-                                            // folowingAPI.followAPI(u.id)
-                                            //     .then(data => { if (data.resultCode == 0) { props.follow(u.id) } 
-                                            //     props.toggleFollowingInProgress(false, u.id)})
                                             props.follow(u.id)
                                         }}>Follow</button>}
                                 </div>

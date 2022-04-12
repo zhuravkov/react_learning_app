@@ -1,11 +1,10 @@
 
 import React from 'react';
 import Profile from './Profile';
-import * as axios from 'axios';
 import { connect } from 'react-redux';
-import { setUserProfile } from '../../redux/profileReduser';
-import { useLocation, useParams } from "react-router-dom";
-import { profileAPI, authAPI } from '../../api/api';
+import { userProfileThunk } from '../../redux/profileReduser';
+import { useParams } from "react-router-dom";
+import { Navigate } from 'react-router-dom';
 
 
 // ВМЕСТО убранного withRouter чтобы работало , разобраться как без этого
@@ -32,25 +31,14 @@ class ProfileContainer extends React.Component  {
 
 
         if (!this.props.params.userId) {
-            userId = 5
-            // // TODO!!!!
-            // authAPI.authMe()
-            //     .then (data => {
-            //         if (data.resultCode ===0 ) {
-            //         userId = data.data.id
-            //         profileAPI.usersProfile(userId)
-            //             .then(data => {
-            //             this.props.setUserProfile(data)})
-            //     }})
-                }
+            userId = 5 }
 
-        profileAPI.usersProfile(userId)
-            .then(data => {
-                this.props.setUserProfile(data)})
+        this.props.userProfileThunk(this.props.params.userId)
     }
 
 
     render() {
+        if (!this.props.isAuth) return <Navigate replace to="/login" />
         return (
             <div>
                {/* Передаем все props дальше <Profile {...this.props} profile = {this.props.profile} */}
@@ -62,9 +50,10 @@ class ProfileContainer extends React.Component  {
 }
 
 let mapStateToProps = (state) => ({
-    profile:state.profilePage.profile
+    profile:state.profilePage.profile,
+    isAuth: state.auth.isAuth
 });
 
 let  WithUrlDataContainerComponent = withRouter (ProfileContainer)
 
-export default connect (mapStateToProps, {setUserProfile}) (WithUrlDataContainerComponent)
+export default connect (mapStateToProps, {userProfileThunk}) (WithUrlDataContainerComponent)
