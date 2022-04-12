@@ -1,37 +1,30 @@
-import * as axios from 'axios';
 import React from 'react';
 
 import { connect } from 'react-redux';
 import Users from './Users';
-import { follow, toggleFollowingInProgress } from './../../redux/usersReduser';
+import { follow } from './../../redux/usersReduser';
 import { unfollow } from './../../redux/usersReduser';
-import { setUsers } from './../../redux/usersReduser';
 import { setCurrentPage } from './../../redux/usersReduser';
-import { setTotalUsersCount } from './../../redux/usersReduser';
-import { toggleIsFething } from './../../redux/usersReduser';
-import Preloader from '../common/Preloader';
-import { usersAPI } from '../../api/api.js';
 
+import Preloader from '../common/Preloader';
+import { getUsersThunkCreator } from './../../redux/usersReduser';
 
 
 class UsersContainer extends React.Component{
     componentDidMount = () => {
-        this.props.toggleIsFething(true);
-        // обращаемся в DAL вместо сервера и там выполняется запрос, сюда возвращается только data
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
-            this.props.toggleIsFething(false);
-            this.props.setUsers(data.users);
-            this.props.setTotalUsersCount(data.count)
-        })
+        this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize);
     }
 
     onPageChanged = (pageNumber) => {
         this.props.setCurrentPage(pageNumber);
-        this.props.toggleIsFething(true);
-        usersAPI.getUsers(pageNumber, this.props.pageSize).then(data => {
-            this.props.toggleIsFething(false);
-            this.props.setUsers(data.users)
-        })        
+
+        this.props.getUsersThunkCreator(pageNumber, this.props.pageSize);
+        // this.props.setCurrentPage(pageNumber);
+        // this.props.toggleIsFething(true);
+        // usersAPI.getUsers(pageNumber, this.props.pageSize).then(data => {
+        //     this.props.toggleIsFething(false);
+        //     this.props.setUsers(data.users)
+        // })        
     }
 
 
@@ -48,10 +41,7 @@ class UsersContainer extends React.Component{
         follow = {this.props.follow}
         unfollow = {this.props.unfollow}
         onPageChanged =  {this.onPageChanged}
-        toggleFollowingInProgress = {this.props.toggleFollowingInProgress}
         followingInProgress= {this.props.followingInProgress}
-        
-        
         />
         </>
     } 
@@ -99,5 +89,5 @@ let MapDispatchToProps = (dispatch) => {
 }
 */
 
-export default  connect(mapStateToProps, {follow, unfollow, setUsers, setCurrentPage, 
-    setTotalUsersCount,toggleIsFething,toggleFollowingInProgress})(UsersContainer)
+export default  connect(mapStateToProps, {follow, unfollow, setCurrentPage,
+     getUsersThunkCreator })(UsersContainer)

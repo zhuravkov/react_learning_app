@@ -1,4 +1,7 @@
+import { authAPI } from './../api/api';
+
 const SET_USER_DATA = 'SET_USER_DATA';
+
 
 
 
@@ -29,8 +32,20 @@ const authReduser = (state = inicialState, action) => {
 }
 
 
-export const setAuthUserData = (userId, login, email) => ({type: SET_USER_DATA, data:{userId, login, email}})
+const setAuthUserData = (userId, login, email) => ({type: SET_USER_DATA, data:{userId, login, email}})
 
-
+export const authUserThunk = () =>{
+    return (dispath) =>{
+        
+        authAPI.authMe()
+        .then(data => {
+            if (data.resultCode ===0 ) {
+                let {id, login, email} = data.data
+                
+                dispath(setAuthUserData(id, login, email));
+            }
+        })
+    }
+}
 
 export default authReduser

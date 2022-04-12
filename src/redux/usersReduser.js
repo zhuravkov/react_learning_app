@@ -1,3 +1,7 @@
+
+import { usersAPI, folowingAPI } from './../api/api';
+
+
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -73,13 +77,69 @@ const usersReduser = (state = inicialState, action) => {
 }
 
 
-export const follow = (userId) => ({type: FOLLOW, userId})
-export const unfollow = (userId) => ({type: UNFOLLOW, userId})
-export const setUsers = (users) => ({type: SET_USERS, users})
+
+const setUsers = (users) => ({type: SET_USERS, users})
+const toggleIsFething = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching})
+const setTotalUsersCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_COUNT, totalUsersCount})
+
+const followSuccess = (userId) => ({type: FOLLOW, userId})
+const unfollowSuccess = (userId) => ({type: UNFOLLOW, userId})
+const toggleFollowingInProgress = (isFetching, id) => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, id})
+
+
+
 export const setCurrentPage = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage})
-export const setTotalUsersCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_COUNT, totalUsersCount})
-export const toggleIsFething = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching})
-export const toggleFollowingInProgress = (isFetching, id) => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, id})
+
+
+
+
+// САНКА 
+export const getUsersThunkCreator = (currentPage,pageSize) => {
+    // Замыкание
+    return (dispatch) => {
+
+        // здесь мы диспатчим обычный экшн который выше определиси создав его АС 
+        // больше не нужно его прокидывать по пропсам, всё происходит здесь
+        dispatch(toggleIsFething(true));
+
+        // обращаемся в DAL вместо сервера и там выполняется запрос, сюда возвращается только data
+        /* чтобы санка могла взять внешние аргументы мы ее оборачиваем другой функцией 
+         которая вызывается с нужными аргументами и с помощью замыкания получаем к ним доступ*/
+        usersAPI.getUsers(currentPage, pageSize).then(data => {
+
+            dispatch(toggleIsFething(false));
+            // АПИ вернул пользователей и мы их засетили сдесь же
+            dispatch(setUsers(data.users));
+            dispatch(setTotalUsersCount(data.count))
+        })
+    }
+}
+
+
+export const follow = (id) =>{
+    return (dispatch) => {
+        dispatch(toggleFollowingInProgress(true, id))
+        folowingAPI.followAPI(id)
+                .then(data => { if (data.resultCode == 0) { 
+                    dispatch(followSuccess(id)) }
+                    dispatch(toggleFollowingInProgress(false, id))
+        })
+    }
+}
+
+
+export const unfollow = (id) =>{
+    return (dispatch) => {
+        dispatch(toggleFollowingInProgress(true, id))
+        folowingAPI.unfollowAPI(id)
+                .then(data => { if (data.resultCode == 0) { 
+                    dispatch(unfollowSuccess(id)) }
+                    dispatch(toggleFollowingInProgress(false, id))
+        })
+    }
+}
+
+
 
 
 export default usersReduser
