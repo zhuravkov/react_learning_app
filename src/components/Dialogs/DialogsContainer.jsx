@@ -2,6 +2,7 @@ import Dialogs from './Dialogs';
 import { addMessageActionCreator } from './../../redux/dialogsReduser';
 import { updateNewMessageActionCreator } from './../../redux/dialogsReduser';
 import { connect } from 'react-redux';
+import { withAuthRedirect } from '../hoc/withAuthRedirect';
 
 
 // const DialogsContainerLast = (props) => {
@@ -29,7 +30,7 @@ import { connect } from 'react-redux';
 let mapStateToProps = (state) => {
     return {
         dialogsPage: state.dialogsPage,
-        isAuth: state.auth.isAuth
+
     }
 };
     
@@ -48,7 +49,11 @@ let mapDispatchToProps =(dispatch) => {
 };
 
 
-let DialogsContainer = connect (mapStateToProps,mapDispatchToProps)(Dialogs);
+// Оборачиваем в ХОК
+let AuthRedirectComponent = withAuthRedirect(Dialogs)
+
+
+let DialogsContainer = connect (mapStateToProps,mapDispatchToProps)(AuthRedirectComponent);
 
 
 

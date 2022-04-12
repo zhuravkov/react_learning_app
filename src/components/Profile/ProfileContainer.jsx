@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { userProfileThunk } from '../../redux/profileReduser';
 import { useParams } from "react-router-dom";
 import { Navigate } from 'react-router-dom';
+import { withAuthRedirect } from '../hoc/withAuthRedirect';
 
 
 // ВМЕСТО убранного withRouter чтобы работало , разобраться как без этого
@@ -28,17 +29,15 @@ class ProfileContainer extends React.Component  {
     
     componentDidMount () {
         let userId = this.props.params.userId
-
-
         if (!this.props.params.userId) {
             userId = 5 }
 
-        this.props.userProfileThunk(this.props.params.userId)
+        this.props.userProfileThunk(userId)
     }
 
 
     render() {
-        if (!this.props.isAuth) return <Navigate replace to="/login" />
+       
         return (
             <div>
                {/* Передаем все props дальше <Profile {...this.props} profile = {this.props.profile} */}
@@ -49,11 +48,14 @@ class ProfileContainer extends React.Component  {
     }
 }
 
+// Оборачиваем в ХОК
+let AuthRedirectComponent = withAuthRedirect(ProfileContainer)
+
 let mapStateToProps = (state) => ({
     profile:state.profilePage.profile,
-    isAuth: state.auth.isAuth
+    // isAuth: state.auth.isAuth
 });
 
-let  WithUrlDataContainerComponent = withRouter (ProfileContainer)
+let  WithUrlDataContainerComponent = withRouter (AuthRedirectComponent)
 
 export default connect (mapStateToProps, {userProfileThunk}) (WithUrlDataContainerComponent)
