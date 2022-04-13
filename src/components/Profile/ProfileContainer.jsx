@@ -6,6 +6,7 @@ import { userProfileThunk } from '../../redux/profileReduser';
 import { useParams } from "react-router-dom";
 import { Navigate } from 'react-router-dom';
 import { withAuthRedirect } from '../hoc/withAuthRedirect';
+import { compose } from 'redux';
 
 
 // ВМЕСТО убранного withRouter чтобы работало , разобраться как без этого
@@ -48,14 +49,19 @@ class ProfileContainer extends React.Component  {
     }
 }
 
-// Оборачиваем в ХОК
-let AuthRedirectComponent = withAuthRedirect(ProfileContainer)
-
 let mapStateToProps = (state) => ({
     profile:state.profilePage.profile,
-    // isAuth: state.auth.isAuth
 });
+// compose поочереди оборачивает в хоки конечную компоненту в 1 месте
+export default compose(
+    withAuthRedirect,
+    withRouter,
+    connect (mapStateToProps, {userProfileThunk})
+)(ProfileContainer)
 
-let  WithUrlDataContainerComponent = withRouter (AuthRedirectComponent)
 
-export default connect (mapStateToProps, {userProfileThunk}) (WithUrlDataContainerComponent)
+
+// Оборачиваем в ХОК
+// let AuthRedirectComponent = withAuthRedirect(ProfileContainer)
+// let  WithUrlDataContainerComponent = withRouter (AuthRedirectComponent)
+// export default connect (mapStateToProps, {userProfileThunk}) (WithUrlDataContainerComponent)

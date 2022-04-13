@@ -8,6 +8,8 @@ import { setCurrentPage } from './../../redux/usersReduser';
 
 import Preloader from '../common/Preloader';
 import { getUsersThunkCreator } from './../../redux/usersReduser';
+import { compose } from 'redux';
+import { withAuthRedirect } from '../hoc/withAuthRedirect';
 
 
 class UsersContainer extends React.Component{
@@ -81,6 +83,13 @@ let MapDispatchToProps = (dispatch) => {
     }
 }
 */
+export default compose (
+    
+    connect(mapStateToProps, {follow, unfollow, setCurrentPage,
+        getUsersThunkCreator }),
+    withAuthRedirect   
+)(UsersContainer)
 
-export default  connect(mapStateToProps, {follow, unfollow, setCurrentPage,
-     getUsersThunkCreator })(UsersContainer)
+
+// export default  connect(mapStateToProps, {follow, unfollow, setCurrentPage,
+//      getUsersThunkCreator })(UsersContainer)
