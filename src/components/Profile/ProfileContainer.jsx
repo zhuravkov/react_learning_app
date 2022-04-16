@@ -2,7 +2,7 @@
 import React from 'react';
 import Profile from './Profile';
 import { connect } from 'react-redux';
-import { userProfileThunk } from '../../redux/profileReduser';
+import { userProfileThunk, updateUserStatusThunk,getUserStatusThunk } from '../../redux/profileReduser';
 import { useParams } from "react-router-dom";
 import { Navigate } from 'react-router-dom';
 import { withAuthRedirect } from '../hoc/withAuthRedirect';
@@ -13,7 +13,7 @@ import { compose } from 'redux';
 const withRouter = (WrappedComponent) => (props) => {
     const params = useParams();
     // etc... other react-router-dom v6 hooks
-  
+
     return (
       <WrappedComponent
         {...props}
@@ -29,11 +29,18 @@ class ProfileContainer extends React.Component  {
     
     
     componentDidMount () {
-        let userId = this.props.params.userId
-        if (!this.props.params.userId) {
-            userId = 5 }
+        let userId = ''
+        if (!this.props.params.userId) { 
+           userId = this.props.isAuthUserId
+            }
+        if (this.props.params.userId) { 
+            userId = this.props.params.userId
+            }
+
+        
 
         this.props.userProfileThunk(userId)
+        this.props.getUserStatusThunk(userId)
     }
 
 
@@ -51,12 +58,15 @@ class ProfileContainer extends React.Component  {
 
 let mapStateToProps = (state) => ({
     profile:state.profilePage.profile,
+    isAuthUserId: state.auth.userId,
+    status: state.profilePage.status,
+
 });
 // compose поочереди оборачивает в хоки конечную компоненту в 1 месте
 export default compose(
     withAuthRedirect,
     withRouter,
-    connect (mapStateToProps, {userProfileThunk})
+    connect (mapStateToProps, {userProfileThunk, getUserStatusThunk , updateUserStatusThunk })
 )(ProfileContainer)
 
 
