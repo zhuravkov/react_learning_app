@@ -34,6 +34,9 @@ const authReduser = (state = inicialState, action) => {
 
 const setAuthUserData = (userId, login, email) => ({type: SET_USER_DATA, data:{userId, login, email}})
 
+
+
+
 export const authUserThunk = () =>{
     return (dispath) =>{
         
@@ -47,5 +50,23 @@ export const authUserThunk = () =>{
         })
     }
 }
+
+
+export const loginThunk = (username, password) =>{
+    return (dispath) =>{
+        
+        authAPI.login(username, password)
+        .then(data => {
+            if (data.resultCode ===0 ) {
+                let {id, login, email} = data.data
+                
+                dispath(setAuthUserData(id, login, email));
+            }
+        })
+    }
+}
+
+
+
 
 export default authReduser
