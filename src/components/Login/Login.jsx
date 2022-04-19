@@ -25,6 +25,7 @@ let Login = (props) => {
                 <h1>Login</h1>
                 <LoginReduxForm onSubmit={onSubmit}/>
                 <button onClick={()=>props.logoutThunk()}>Logout</button>
+
             </div>
 }
 
@@ -40,6 +41,9 @@ let LoginForm = (props) => {
                     </div>
                     <div>
                         <Field  component =  { Input } name={"rememberMe"} type={"checkbox"}   /> remember me
+                    </div>
+                    <div style={{color:"red"}}>
+                        {props.error}
                     </div>
                     <div>
                         <button>Login</button>

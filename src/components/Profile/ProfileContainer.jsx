@@ -63,8 +63,9 @@ class ProfileContainer extends React.Component  {
 
 let mapStateToProps = (state) => ({
     profile:state.profilePage.profile,
-    isAuthUserId: state.auth.userId,
     status: state.profilePage.status,
+    isAuthUserId: state.auth.userId,
+    isAuthUserId: state.auth.isAuth,
 
 });
 // compose поочереди оборачивает в хоки конечную компоненту в 1 месте

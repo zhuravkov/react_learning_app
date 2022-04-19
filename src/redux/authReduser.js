@@ -1,3 +1,4 @@
+import { stopSubmit } from 'redux-form';
 import { authAPI } from './../api/api';
 
 const SET_USER_DATA = 'SET_USER_DATA';
@@ -61,6 +62,11 @@ export const loginThunk = (username, password) =>{
                 // let {id, login, email} = data.data
                 // dispath(setAuthUserData(id, login, email));
                 dispath(authUserThunk())
+            }
+            else{
+                let message = data.message.length > 0 ? data.message : "Some Error";
+                let action = stopSubmit("login", {_error: message})
+                dispath(action)
             }
         })
     }
