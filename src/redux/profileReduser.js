@@ -33,19 +33,18 @@ const profileReduser = (state=initialState,action) =>{
     switch (action.type){
     
         case ADD_POST:{
-            let postBody = state.newPostText;
+            
             return {
                 ...state,
-                newPostText: 'Новый пост',
-                posts: [...state.posts, {id: "8",message: postBody, likes: "0"}]
+                posts: [...state.posts, {id: "8",message: action.new_post_text, likes: "0"}]
             };
         }
-        case UPDATE_NEW_POST_TEXT:{
-            return {
-                ...state,
-                newPostText: action.newPostText
-            };
-        }
+        // case UPDATE_NEW_POST_TEXT:{
+        //     return {
+        //         ...state,
+        //         newPostText: action.newPostText
+        //     };
+        // }
         case SET_USER_PROFILE:{
             return {
                 ...state,
@@ -68,9 +67,9 @@ const profileReduser = (state=initialState,action) =>{
 
 
 // ПОСТЫ
-export let addPostActionCreator= () => ({type: ADD_POST});
-export let updateNewPostActionCreator= (text) => 
-  ({type: UPDATE_NEW_POST_TEXT, newPostText: text});
+export let addPostActionCreator= (new_post_text) => ({type: ADD_POST, new_post_text});
+// export let updateNewPostActionCreator= (text) => 
+//   ({type: UPDATE_NEW_POST_TEXT, newPostText: text});
 
 let setUserProfile= (profile) => ({type: SET_USER_PROFILE, profile});
 let setUserStatus= (status) => ({type: SET_USER_STATUS, status});

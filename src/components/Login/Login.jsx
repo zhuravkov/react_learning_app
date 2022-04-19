@@ -1,6 +1,6 @@
 import { Field } from "redux-form"
 import { reduxForm } from "redux-form"
-import { authAPI } from '../../api/api';
+
 import { connect } from 'react-redux';
 
 import { loginThunk } from '../../redux/authReduser';
