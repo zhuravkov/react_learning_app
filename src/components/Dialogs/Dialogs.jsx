@@ -29,9 +29,10 @@ const Dialogs = (props) => {
         
 
 
-            <EnterMessage newMessageText = {props.dialogsPage.newMessageText} 
-                          sendMessage =  { props.onSendMessageClick }
-                          updateNewMessage = { props.onNewMessageChange }                          
+            <EnterMessage 
+                          addMessageActionCreator =  { props.addMessageActionCreator }
+                        //   updateNewMessage = { props.onNewMessageChange }
+                        // newMessageText = {props.dialogsPage.newMessageText}                           
 
             />
         </div>

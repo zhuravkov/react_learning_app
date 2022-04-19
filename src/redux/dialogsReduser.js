@@ -22,7 +22,7 @@ let initialState = {
       { id: '7', message: 'Привет из state.JS' },
       { id: '8', message: 'из state по веткам' }
     ],
-    newMessageText: ''
+    // newMessageText: ''
 };
 
 
@@ -30,18 +30,18 @@ let initialState = {
 const dialogsReduser = (state = initialState, action) => {
   switch (action.type) {
     case SEND_MESSAGE:
-      let body = state.newMessageText
+      let body = action.new_message_text
       return {  
         ...state, //возвращается копия state
-        newMessageText: '', //в ней меняется данное свойство
+        // newMessageText: '', //в ней меняется данное свойство
         messages: [...state.messages, { id: "9", message: body }]//создается новый объект messages, 
       };                  //который копируется от предыдущего и в конец добавляется новый объект(замена push)
 
-   case UPDATE_NEW_MESSAGE_TEXT:
-      return {
-        ...state,
-        newMessageText: action.newMessageText
-      };
+  //  case UPDATE_NEW_MESSAGE_TEXT:
+  //     return {
+  //       ...state,
+  //       newMessageText: action.newMessageText
+  //     };
 
       default:
         return state;
@@ -49,9 +49,9 @@ const dialogsReduser = (state = initialState, action) => {
 }
 
 // MESSAGES
-export let addMessageActionCreator= () => ({type: SEND_MESSAGE})
-export let updateNewMessageActionCreator= (messageText) =>   
-  ({ type: UPDATE_NEW_MESSAGE_TEXT , newMessageText: messageText});
+export let addMessageActionCreator= (new_message_text) => ({type: SEND_MESSAGE, new_message_text})
+// export let updateNewMessageActionCreator= (messageText) =>   
+//   ({ type: UPDATE_NEW_MESSAGE_TEXT , newMessageText: messageText});
 
 
 

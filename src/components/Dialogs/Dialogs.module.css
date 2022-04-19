@@ -60,24 +60,32 @@
 .enterMessage{
     grid-area: ENTER;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     justify-items: left;
     align-items: center;
-    
+    padding: 20px;
 }
+
+.enterMessage form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+}
+    
+
 .enterMessage button{
     border: 5px solid rgb(216, 250, 184);
     padding: 5px;
     margin: 5px;
     border-radius: 30px;
     display: block;
-    width: 200px;
     text-align: center;
 }
-.enterMessage textarea{
+.enterMessage textarea {
     border: 5px solid rgb(184, 250, 228);
     padding: 5px;
     margin: 5px;
     border-radius: 10px;
     display: block;
+    width: 800px;
 }

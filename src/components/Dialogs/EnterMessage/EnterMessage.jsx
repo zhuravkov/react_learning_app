@@ -4,30 +4,54 @@ import s from '.././Dialogs.module.css'
 
 
 
-const  EnterMessage = (props) => {
-    
+import { Field } from "redux-form"
+import { reduxForm } from "redux-form"
+import { connect } from 'react-redux';
 
-    let onUpdateNewMessage = (e) => {
-        let text = e.target.value;
-        props.updateNewMessage (text);
-    }
-    
-    let onSendMessage =() => {
-        props.sendMessage();
+
+import { requiredField, maxLengthCreator } from '../../../utils/validators/validators';
+import { TextArea } from '../../common/FormsControls/FormControls';
+
+
+const maxLength20 =  maxLengthCreator(20);
+
+let NewMessage = (props) => {
+    const onSubmit = (formData) => {
+        console.log(formData)
+        props.addMessageActionCreator(formData.new_message_text)
     }
 
-    return (
-        <div className= { s.enterMessage }>
-            <div>
-                <textarea  onChange={ onUpdateNewMessage } value={props.newMessageText} placeholder="Введи сообщение"  cols="80" rows="3"></textarea>
-            </div>
-            <div>
-                <button onClick={ onSendMessage } >Отправить</button>
-            </div>
-                
-            
+    return <div className = {s.enterMessage}>
+                <NewPostReduxForm onSubmit={onSubmit}/>
         </div>
-
-    )
 }
-export default EnterMessage;
+
+
+let NewMessageForm = (props) => {
+ 
+    return (
+                <form onSubmit={props.handleSubmit}>
+                    <div>
+                        <Field placeholder={'Введи сообщение'} name={"new_message_text"} component ={TextArea}  validate={ [requiredField , maxLength20 ] } />
+                    </div>
+                    <div>
+                        <button >Отправить</button>
+                    </div>
+                </form>
+    )
+        
+}
+
+const NewPostReduxForm = reduxForm({
+    // a unique name for the form
+    form: 'new_message'
+  })(NewMessageForm)
+
+
+
+
+
+export default connect(undefined,{})(NewMessage)
+
+
+

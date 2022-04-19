@@ -28,21 +28,26 @@ const withRouter = (WrappedComponent) => (props) => {
 class ProfileContainer extends React.Component  {
     
     
-    componentDidMount () {
-        let userId = ''
-        if (!this.props.params.userId) { 
-           userId = this.props.isAuthUserId
-            }
-        if (this.props.params.userId) { 
-            userId = this.props.params.userId
-            }
+    componentDidMount() {
+        // ВРЕМЕННО ждёт 1 сек чтобы прошла регистрация
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+          }
 
-        
-
-        this.props.userProfileThunk(userId)
-        this.props.getUserStatusThunk(userId)
+            let userId = ''
+            if (!this.props.params.userId) {
+                delay(1000).then(() => {
+                    userId = this.props.isAuthUserId
+                    this.props.userProfileThunk(userId)
+                    this.props.getUserStatusThunk(userId)
+                    
+            })}
+            if (this.props.params.userId) {
+                userId = this.props.params.userId
+                this.props.userProfileThunk(userId)
+                this.props.getUserStatusThunk(userId)
+            } 
     }
-
 
     render() {
        
@@ -64,7 +69,7 @@ let mapStateToProps = (state) => ({
 });
 // compose поочереди оборачивает в хоки конечную компоненту в 1 месте
 export default compose(
-    withAuthRedirect,
+    // withAuthRedirect,
     withRouter,
     connect (mapStateToProps, {userProfileThunk, getUserStatusThunk , updateUserStatusThunk })
 )(ProfileContainer)

@@ -35,23 +35,23 @@ let mapStateToProps = (state) => {
 };
     
 
-let mapDispatchToProps =(dispatch) => {
-    return {
-       onSendMessageClick: () => {
-            dispatch(addMessageActionCreator());
-        },
+// let mapDispatchToProps =(dispatch) => {
+//     return {
+//        onSendMessageClick: () => {
+//             dispatch(addMessageActionCreator());
+//         },
     
-        onNewMessageChange: (body) => {
-            let action = updateNewMessageActionCreator(body)
-            dispatch(action);
-        }
-    }
-};
+//         // onNewMessageChange: (body) => {
+//         //     let action = updateNewMessageActionCreator(body)
+//         //     dispatch(action);
+//         // }
+//     }
+// };
 
 
 export default compose (
     withAuthRedirect,
-    connect (mapStateToProps,mapDispatchToProps)
+    connect (mapStateToProps,{addMessageActionCreator})
     )(Dialogs)
 
 
