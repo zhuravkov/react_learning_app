@@ -21,7 +21,7 @@ const authReduser = (state = inicialState, action) => {
             return {
                 ...state,
                 ...action.data,
-                isAuth: true
+                // isAuth: true
                 }
 
         default:
@@ -32,7 +32,7 @@ const authReduser = (state = inicialState, action) => {
 }
 
 
-const setAuthUserData = (userId, login, email) => ({type: SET_USER_DATA, data:{userId, login, email}})
+const setAuthUserData = (userId, login, email, isAuth) => ({type: SET_USER_DATA, data:{userId, login, email, isAuth}})
 
 
 
@@ -45,7 +45,7 @@ export const authUserThunk = () =>{
             if (data.resultCode ===0 ) {
                 let {id, login, email} = data.data
                 
-                dispath(setAuthUserData(id, login, email));
+                dispath(setAuthUserData(id, login, email,true));
             }
         })
     }
@@ -58,9 +58,20 @@ export const loginThunk = (username, password) =>{
         authAPI.login(username, password)
         .then(data => {
             if (data.resultCode ===0 ) {
-                let {id, login, email} = data.data
-                
-                dispath(setAuthUserData(id, login, email));
+                // let {id, login, email} = data.data
+                // dispath(setAuthUserData(id, login, email));
+                dispath(authUserThunk())
+            }
+        })
+    }
+}
+
+export const logoutThunk = () =>{
+    return (dispath) =>{
+        authAPI.logout()
+        .then(data => {
+            if (data.resultCode ===0 ) {
+                dispath(setAuthUserData(null, null, null,false));
             }
         })
     }

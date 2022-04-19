@@ -39,7 +39,11 @@ export const authAPI = {
     login (username, password) {
         return instance.post(`/login`, {username, password})
         .then(response => response.data);
-    }
+    },
+    logout () {
+        return instance.delete(`/login`)
+        .then(response => response.data);
+    },
 }
 
 export const profileAPI = {

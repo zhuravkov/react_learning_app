@@ -3,11 +3,11 @@ import { reduxForm } from "redux-form"
 
 import { connect } from 'react-redux';
 
-import { loginThunk } from '../../redux/authReduser';
+import { loginThunk, logoutThunk } from '../../redux/authReduser';
 import { Input } from "../common/FormsControls/FormControls";
 import { requiredField } from '../../utils/validators/validators';
 
-
+import { Navigate } from 'react-router-dom';
 
 let Login = (props) => {
     const onSubmit = (formData) => {
@@ -17,11 +17,15 @@ let Login = (props) => {
         props.loginThunk(login, password)
     }
 
+    if (props.isAuth) {
+        return <Navigate replace to="/profile" />
+    }
+
     return <div>
                 <h1>Login</h1>
                 <LoginReduxForm onSubmit={onSubmit}/>
-
-        </div>
+                <button onClick={()=>props.logoutThunk()}>Logout</button>
+            </div>
 }
 
 let LoginForm = (props) => {
@@ -50,8 +54,11 @@ const LoginReduxForm = reduxForm({
     form: 'login'
   })(LoginForm)
 
+const mapStateToProps = (state) => ({
+    isAuth: state.auth.isAuth
+})
 
 
 
 
-export default connect(undefined,{ loginThunk })(Login)
+export default connect(mapStateToProps,{ loginThunk,logoutThunk })(Login)
