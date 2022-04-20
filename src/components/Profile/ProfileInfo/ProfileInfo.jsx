@@ -1,6 +1,7 @@
 import s from './ProfileInfo.module.css';
 import Preloader from '../../common/Preloader';
 import Status from './Status/Status';
+import StatusWithHOOK from './Status/StatusWithHOOK';
 
 const ProfileInfo = (props) => {
 
@@ -19,7 +20,8 @@ const ProfileInfo = (props) => {
                     {props.profile.name}
                 </div>
                 <div>
-                    <Status status = {props.status} updateUserStatusThunk = {props.updateUserStatusThunk} />
+                    {/* <Status status = {props.status} updateUserStatusThunk = {props.updateUserStatusThunk} /> */}
+                    <StatusWithHOOK status = {props.status} updateUserStatusThunk = {props.updateUserStatusThunk} />
                 </div>
             </div>
         </div>);
