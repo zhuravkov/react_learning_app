@@ -1,6 +1,19 @@
-export const getUsers = (state) => {
+
+import { createSelector } from 'reselect';
+
+const getUsersSelector = (state) => {
     return state.usersPage.users
 }
+
+// Сложный селектор, создан с помошью reselect, служит для того
+// чтобы не вызывать render() так как filter создает новый объект
+// и connect принимает будьто state изменился и он не срабатывал постоянно
+
+export const getUsers = createSelector(getUsersSelector,(users)=> {
+    return users.filter (u => true)
+}) 
+
+
 
 export const getPageSize = (state) => {
     return state.usersPage.pageSize
