@@ -41,7 +41,7 @@ const setAuthUserData = (userId, login, email, isAuth) => ({type: SET_USER_DATA,
 export const authUserThunk = () =>{
     return (dispath) =>{
         
-        authAPI.authMe()
+        return authAPI.authMe()
         .then(data => {
             if (data.resultCode ===0 ) {
                 let {id, login, email} = data.data

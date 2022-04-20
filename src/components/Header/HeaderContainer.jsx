@@ -12,7 +12,8 @@ class HeaderContainer extends React.Component {
     componentDidMount (){
 
         // Вся логика в САНКЕ
-        this.props.authUserThunk()
+        // убрали в App инициализация при запуске
+        // this.props.authUserThunk()
     }
 
     render () {

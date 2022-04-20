@@ -29,24 +29,17 @@ class ProfileContainer extends React.Component  {
     
     
     componentDidMount() {
-        // ВРЕМЕННО ждёт 1 сек чтобы прошла регистрация
-        function delay(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
-          }
+        let userId = ''
+        if (this.props.params.userId) {
+          userId = this.props.params.userId  }
+        else {
+            userId = this.props.isAuthUserId
+        }
+        
 
-            let userId = ''
-            if (!this.props.params.userId) {
-                delay(1000).then(() => {
-                    userId = this.props.isAuthUserId
-                    this.props.userProfileThunk(userId)
-                    this.props.getUserStatusThunk(userId)
-                    
-            })}
-            if (this.props.params.userId) {
-                userId = this.props.params.userId
-                this.props.userProfileThunk(userId)
-                this.props.getUserStatusThunk(userId)
-            } 
+        this.props.userProfileThunk(userId)
+        this.props.getUserStatusThunk(userId)    
+        
     }
 
     render() {
@@ -65,12 +58,12 @@ let mapStateToProps = (state) => ({
     profile:state.profilePage.profile,
     status: state.profilePage.status,
     isAuthUserId: state.auth.userId,
-    isAuthUserId: state.auth.isAuth,
+    isAuth: state.auth.isAuth,
 
 });
 // compose поочереди оборачивает в хоки конечную компоненту в 1 месте
 export default compose(
-    // withAuthRedirect,
+    withAuthRedirect,
     withRouter,
     connect (mapStateToProps, {userProfileThunk, getUserStatusThunk , updateUserStatusThunk })
 )(ProfileContainer)
