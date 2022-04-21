@@ -18,5 +18,3 @@ it ('new post should be added', () =>{
     expect(newState.posts.length).toBe(4)
 
 });
-
-89 - Тесты, jest, tdd, тестируем reducer - React JS

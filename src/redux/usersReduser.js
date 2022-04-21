@@ -1,5 +1,6 @@
 
 import { usersAPI, folowingAPI } from './../api/api';
+import { updateObjectInArray } from '../utils/object-helpers';
 
 
 const FOLLOW = 'FOLLOW';
@@ -27,23 +28,29 @@ const usersReduser = (state = inicialState, action) => {
         case FOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: true}
-                    }
-                    return u;
-                })
+                users: updateObjectInArray(state.users, action.userId, "id",{followed: true})
+                // убрали map в отдельную функцию
+                // users: state.users.map(u => {
+                //     if (u.id === action.userId) {
+                //         return {...u, followed: true}
+                //     }
+                //     return u;
+                // })
             }
         case UNFOLLOW:
+
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: false}
-                    }
-                    return u;
-                })
+                users: updateObjectInArray(state.users, action.userId, "id",{followed: false})
+                
+                // users: state.users.map(u => {
+                //     if (u.id === action.userId) {
+                //         return {...u, followed: false}
+                //     }
+                //     return u;
+                // })
             }
+            
         case SET_USERS:
             return {...state, users:[...action.users]} //Вместо [...state.users, ...action.users] чтобы не рисовало 2 раза
         
@@ -96,7 +103,9 @@ export const setCurrentPage = (currentPage) => ({type: SET_CURRENT_PAGE, current
 // САНКА 
 export const getUsersThunkCreator = (currentPage,pageSize) => {
     // Замыкание
-    return (dispatch) => {
+
+    // вводим  async  await вместо .then
+    return async (dispatch) => {
 
         // здесь мы диспатчим обычный экшн который выше определиси создав его АС 
         // больше не нужно его прокидывать по пропсам, всё происходит здесь
@@ -105,37 +114,42 @@ export const getUsersThunkCreator = (currentPage,pageSize) => {
         // обращаемся в DAL вместо сервера и там выполняется запрос, сюда возвращается только data
         /* чтобы санка могла взять внешние аргументы мы ее оборачиваем другой функцией 
          которая вызывается с нужными аргументами и с помощью замыкания получаем к ним доступ*/
-        usersAPI.getUsers(currentPage, pageSize).then(data => {
 
-            dispatch(toggleIsFething(false));
-            // АПИ вернул пользователей и мы их засетили сдесь же
-            dispatch(setUsers(data.users));
-            dispatch(setTotalUsersCount(data.count))
-        })
+        // ждём пока выполнися запрос и идем дальше
+        let data = await usersAPI.getUsers(currentPage, pageSize);
+
+        dispatch(toggleIsFething(false));
+        // АПИ вернул пользователей и мы их засетили сдесь же
+        dispatch(setUsers(data.users));
+        dispatch(setTotalUsersCount(data.count))
     }
 }
+
+// видим что follow/ Unfollow похожи, дублирование кода-ЗЛО 
+// выносим в отдельную функцию логику и потом вызываем
+const followUnfollowFlow = async(dispatch,id,apiMethod, actionCreator) => {
+    dispatch(toggleFollowingInProgress(true, id))
+    let data = await apiMethod(id);
+    if (data.resultCode == 0) { 
+        dispatch(actionCreator(id)) }
+    dispatch(toggleFollowingInProgress(false, id))
+}
+
+
 
 
 export const follow = (id) =>{
-    return (dispatch) => {
-        dispatch(toggleFollowingInProgress(true, id))
-        folowingAPI.followAPI(id)
-                .then(data => { if (data.resultCode == 0) { 
-                    dispatch(followSuccess(id)) }
-                    dispatch(toggleFollowingInProgress(false, id))
-        })
+    return async (dispatch) => {
+    // всё лежит в отдельной функции, убрали дублирование
+    followUnfollowFlow(dispatch, id, folowingAPI.followAPI.bind(folowingAPI), followSuccess)    
     }
 }
 
 
-export const unfollow = (id) =>{
-    return (dispatch) => {
-        dispatch(toggleFollowingInProgress(true, id))
-        folowingAPI.unfollowAPI(id)
-                .then(data => { if (data.resultCode == 0) { 
-                    dispatch(unfollowSuccess(id)) }
-                    dispatch(toggleFollowingInProgress(false, id))
-        })
+export const unfollow = (id) => {
+    return async (dispatch) => {
+        // всё лежит в отдельной функции, убрали дублирование
+        followUnfollowFlow(dispatch, id, folowingAPI.unfollowAPI.bind(folowingAPI), unfollowSuccess)
     }
 }
 
