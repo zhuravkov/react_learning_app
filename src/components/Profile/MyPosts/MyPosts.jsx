@@ -6,9 +6,10 @@ import Post from './Post/Post.jsx'
 
 
 
-const MyPosts = (props) => {
+const MyPosts =  (props) => {
+    console.log('RENDER')
 
-    let postsElements = props.posts.map(p => <Post message={p.message} likes={p.likes} />)
+    let postsElements = props.posts.map(p => <Post key={p.id} message={p.message} likes={p.likes} />)
 
 
     return (
